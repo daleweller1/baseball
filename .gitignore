@@ -1,0 +1,11 @@
+# Ignore Visual Studio files
+.vs/
+.vscode/
+*.suo
+*.user
+*.cache
+*.db
+*.log
+bin/
+obj/
+node_modules/
