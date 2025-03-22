@@ -1,8 +1,8 @@
 import React from "react";
 
-const PlayerCard = ({ player, onEdit }) => {
+const PlayerCard = ({ player, onEdit, onBio }) => {
     return (
-        <div className="player-card">
+        <div className="player-card" onClick={() => onBio(player)}>
             <h3>{player["Player name"]} ({player["position"]})</h3>
             <p><strong>Games:</strong> {player["Games"]}</p>
             <p><strong>At-Bats:</strong> {player["At-bat"]}</p>
@@ -21,7 +21,14 @@ const PlayerCard = ({ player, onEdit }) => {
             <p><strong>Slugging %:</strong> {player["Slugging Percentage"]}</p>
             <p><strong>OPS:</strong> {player["On-base Plus Slugging"]}</p>
 
-            <button onClick={() => onEdit(player)}>Edit</button>
+            <button
+                onClick={(e) => {
+                    e.stopPropagation();
+                    onEdit(player);
+                }}
+            >
+                Edit
+            </button>
         </div>
     );
 };

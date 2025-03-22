@@ -16,13 +16,15 @@ const PlayerBioModal = ({ player, onClose }) => {
             }
         };
 
-        fetchBiography();
-    }, [player]);
+        if (player?.["Player name"]) {
+            fetchBiography();
+        }
+    }, [player["Player name"]]);
 
     return (
         <div className="modal-overlay" onClick={onClose}>
             <div className="modal" onClick={(e) => e.stopPropagation()}>
-                <h2>{player["Player name"]} - Biography</h2>
+                <h2>{player["Player name"]}</h2>
                 <p>{bio}</p>
                 <button className="close-btn" onClick={onClose}>Close</button>
             </div>
