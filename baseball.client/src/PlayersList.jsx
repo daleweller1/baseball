@@ -39,17 +39,17 @@ const PlayersList = () => {
 
     return (
         <div className="players-container">
-            {editingPlayer ? (
+            {players.map(player => (
+                <PlayerCard
+                    key={player.id}
+                    player={player}
+                    onEdit={handleEdit}
+                    onBio={handleBioClick}
+                />
+            ))}
+
+            {editingPlayer && (
                 <EditPlayer player={editingPlayer} onSave={handleSave} onCancel={handleCancel} />
-            ) : (
-                players.map(player => (
-                    <PlayerCard
-                        key={player.id}
-                        player={player}
-                        onEdit={handleEdit}
-                        onBio={handleBioClick}
-                    />
-                ))
             )}
 
             {bioPlayer && (

@@ -5,11 +5,11 @@ using OpenAI.Chat;
 
 namespace Baseball.Server.Services
 {
-    public class OpenAIService
+    public class PlayerBioService
     {
         private readonly ChatClient _client;
 
-        public OpenAIService(IConfiguration configuration)
+        public PlayerBioService(IConfiguration configuration)
         {
             string apiKey = configuration["OpenAI:ApiKey"];
             _client = new ChatClient("gpt-4o", apiKey);

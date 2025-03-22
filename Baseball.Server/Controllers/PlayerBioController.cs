@@ -8,9 +8,9 @@ namespace Baseball.Server.Controllers
     [Route("api/playerbio")]
     public class PlayerBioController : ControllerBase
     {
-        private readonly OpenAIService _openAiService;
+        private readonly PlayerBioService _openAiService;
 
-        public PlayerBioController(OpenAIService openAiService)
+        public PlayerBioController(PlayerBioService openAiService)
         {
             _openAiService = openAiService;
         }
