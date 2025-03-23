@@ -1,55 +1,37 @@
 ﻿using Baseball.Server.Models;
+using Baseball.Server.Services;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using System.Threading.Tasks;
 
-[ApiController]
-[Route("api/[controller]")]
-public class BaseballController : ControllerBase
+namespace Baseball.Server.Controllers
 {
-    private readonly AppDbContext _dbContext;
-
-    public BaseballController(AppDbContext dbContext)
+    [ApiController]
+    [Route("api/[controller]")]
+    public class BaseballController : ControllerBase
     {
-        _dbContext = dbContext;
-    }
+        private readonly BaseballService _baseballService;
 
-    [HttpGet("players")]
-    public async Task<IActionResult> GetPlayers()
-    {
-        var players = await _dbContext.Players.ToListAsync();
-        return Ok(players);
-    }
-
-    [HttpPut("players/{id}")]
-    public async Task<IActionResult> UpdatePlayer(int id, [FromBody] BaseballPlayer updatedPlayer)
-    {
-        var existingPlayer = await _dbContext.Players.FindAsync(id);
-        if (existingPlayer == null)
+        public BaseballController(BaseballService baseballService)
         {
-            return NotFound();
+            _baseballService = baseballService;
         }
 
-        existingPlayer.Name = updatedPlayer.Name;
-        existingPlayer.Position = updatedPlayer.Position;
-        existingPlayer.Games = updatedPlayer.Games;
-        existingPlayer.AtBats = updatedPlayer.AtBats;
-        existingPlayer.Runs = updatedPlayer.Runs;
-        existingPlayer.Hits = updatedPlayer.Hits;
-        existingPlayer.Doubles = updatedPlayer.Doubles;
-        existingPlayer.Triples = updatedPlayer.Triples;
-        existingPlayer.HomeRuns = updatedPlayer.HomeRuns;
-        existingPlayer.RBIs = updatedPlayer.RBIs;
-        existingPlayer.Walks = updatedPlayer.Walks;
-        existingPlayer.Strikeouts = updatedPlayer.Strikeouts;
-        existingPlayer.StolenBases = updatedPlayer.StolenBases;
-        existingPlayer.CaughtStealing = updatedPlayer.CaughtStealing;
-        existingPlayer.AVG = updatedPlayer.AVG;
-        existingPlayer.OnBasePercentage = updatedPlayer.OnBasePercentage;
-        existingPlayer.SluggingPercentage = updatedPlayer.SluggingPercentage;
-        existingPlayer.OPS = updatedPlayer.OPS;
+        [HttpGet("players")]
+        public async Task<IActionResult> GetPlayers()
+        {
+            var players = await _baseballService.GetPlayersAsync();
+            return Ok(players);
+        }
 
-        await _dbContext.SaveChangesAsync();
-        return Ok(existingPlayer);
+        [HttpPut("players/{id}")]
+        public async Task<IActionResult> UpdatePlayer(int id, [FromBody] BaseballPlayer updatedPlayer)
+        {
+            var result = await _baseballService.UpdatePlayerAsync(id, updatedPlayer);
+            if (result == null)
+            {
+                return NotFound();
+            }
+            return Ok(result);
+        }
     }
 }
