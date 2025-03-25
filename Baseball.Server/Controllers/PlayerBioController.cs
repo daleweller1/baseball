@@ -8,11 +8,11 @@ namespace Baseball.Server.Controllers
     [Route("api/playerbio")]
     public class PlayerBioController : ControllerBase
     {
-        private readonly PlayerBioService _openAiService;
+        private readonly PlayerBioService _playerBioService;
 
-        public PlayerBioController(PlayerBioService openAiService)
+        public PlayerBioController(PlayerBioService playerBioService)
         {
-            _openAiService = openAiService;
+            _playerBioService = playerBioService;
         }
 
         [HttpGet("{playerName}")]
@@ -23,7 +23,7 @@ namespace Baseball.Server.Controllers
 
             try
             {
-                var bio = await _openAiService.GenerateBiography(playerName);
+                var bio = await _playerBioService.GenerateBiography(playerName);
                 return Ok(new { biography = bio });
             }
             catch (Exception ex)

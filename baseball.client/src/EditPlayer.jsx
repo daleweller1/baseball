@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
-import "./EditPlayer.css"; // Ensure we have styles for the modal
+import "./EditPlayer.css";
 
 const EditPlayer = ({ player, onSave, onCancel }) => {
     const [editedPlayer, setEditedPlayer] = useState({ ...player });
@@ -13,7 +13,7 @@ const EditPlayer = ({ player, onSave, onCancel }) => {
         e.preventDefault();
         try {
             await axios.put(`https://localhost:7094/api/baseball/players/${editedPlayer.id}`, editedPlayer);
-            onSave(editedPlayer); // Close modal after saving
+            onSave(editedPlayer);
         } catch (error) {
             console.error("Error updating player:", error);
         }

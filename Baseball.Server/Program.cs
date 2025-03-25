@@ -14,7 +14,6 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 builder.Services.AddHttpClient<BaseballService>();
-builder.Services.AddScoped<BaseballService>();
 builder.Services.AddSingleton<PlayerBioService>();
 
 builder.Services.AddCors(options =>
